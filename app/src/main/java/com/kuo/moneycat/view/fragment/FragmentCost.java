@@ -8,11 +8,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.transition.TransitionInflater;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.kuo.moneycat.R;
@@ -86,6 +84,9 @@ public class FragmentCost extends Fragment {
 
         for(int i = 0 ; i < 5 ; i ++) {
             CostItem costItem = new CostItem();
+            costItem.setYear(year);
+            costItem.setMonth(month);
+            costItem.setDay(day);
             costItem.setIconImage(R.mipmap.ic_launcher);
             costItem.setTitleText(titles[i]);
             costItem.setCost(costs[i]);
@@ -98,17 +99,19 @@ public class FragmentCost extends Fragment {
         @Override
         public void onClick(View view) {
 
-            FragmentMain fragmentMain = (FragmentMain) getFragmentManager().findFragmentByTag("fragmentMain");
-            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+            FragmentMain fragmentMain = (FragmentMain) getActivity().getSupportFragmentManager().findFragmentByTag("fragmentMain");
+            FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
             FragmentDetail fragmentDetail = new FragmentDetail();
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
-                ImageButton iconImage = (ImageButton) view.findViewById(R.id.iconImage);
+                ImageView iconImage = (ImageView) view.findViewById(R.id.iconImage);
 
-                fragmentDetail.setSharedElementEnterTransition(TransitionInflater.from(getActivity()).inflateTransition(R.transition.change_image_transform));
-                fragmentTransaction.addSharedElement(iconImage, "iconImage");
-                fragmentTransaction.addSharedElement(fragmentMain.floatButton, "floatButton");
+                fragmentDetail.setSharedElementEnterTransition(TransitionInflater.from(getActivity()).inflateTransition(R.transition.trans_move));
+                fragmentDetail.setIconImageTransitionName(iconImage.getTransitionName());
+                fragmentTransaction.addSharedElement(iconImage, iconImage.getTransitionName());
+                fragmentTransaction.addSharedElement(fragmentMain.floatButton, fragmentMain.floatButton.getTransitionName());
+
             }
 
             fragmentTransaction.replace(R.id.frameLayout, fragmentDetail, "fragmentDetail");

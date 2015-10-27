@@ -1,11 +1,13 @@
 package com.kuo.moneycat.view.fragment;
 
 import android.annotation.TargetApi;
+import android.support.v4.app.FragmentTransaction;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.transition.TransitionInflater;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +24,7 @@ public class FragmentDetail extends Fragment {
 
     private Toolbar toolbar;
     private ImageButton floatButton;
-    private ImageButton iconImage;
+    private ImageView iconImage;
 
     private MainActivity mainActivity;
 
@@ -44,12 +46,13 @@ public class FragmentDetail extends Fragment {
 
         toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         floatButton = (ImageButton) view.findViewById(R.id.floatButton);
-        iconImage = (ImageButton) view.findViewById(R.id.iconImage);
+        iconImage = (ImageView) view.findViewById(R.id.iconImage);
         mainActivity = (MainActivity) getActivity();
 
         iconImage.setTransitionName(string);
 
-        toolbar.setTitle("詳細資訊");
+        floatButton.setOnClickListener(floatButtonClickListener);
+
         mainActivity.setSupportActionBar(toolbar);
         mainActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mainActivity.setActionBarDrawerToggle(toolbar);
@@ -60,4 +63,25 @@ public class FragmentDetail extends Fragment {
     public void setIconImageTransitionName(String string) {
         this.string = string;
     }
+
+    private ImageButton.OnClickListener floatButtonClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+            FragmentEditCost fragmentEditCost = new FragmentEditCost();
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+                fragmentEditCost.setSharedElementEnterTransition(TransitionInflater.from(getActivity()).inflateTransition(R.transition.trans_move));
+                fragmentTransaction.addSharedElement(floatButton, floatButton.getTransitionName());
+
+            }
+
+            fragmentTransaction.replace(R.id.frameLayout, fragmentEditCost, "fragmentTransaction");
+            fragmentTransaction.addToBackStack("fragmentTransaction");
+            fragmentTransaction.commit();
+
+        }
+    };
 }

@@ -5,18 +5,17 @@
     android:layout_height="wrap_content"
     android:padding="10dp">
 
-    <ImageButton
-        android:id="@+id/iconImage"
-        android:layout_width="35dp"
-        android:layout_height="35dp"/>
-
     <RelativeLayout
         android:id="@+id/infoLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/background_deep_orenge"
         android:clickable="true"
         android:padding="5dp">
+
+        <ImageView
+            android:id="@+id/iconImage"
+            android:layout_width="40dp"
+            android:layout_height="40dp"/>
 
         <TextView
             android:id="@+id/titleText"
@@ -25,6 +24,7 @@
             android:layout_toLeftOf="@+id/costText"
             android:layout_marginLeft="35dp"
             android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/iconImage"
             android:text="括包"
             android:textSize="20dp"
             android:textColor="@color/Grey_900"/>
@@ -40,4 +40,5 @@
             android:textColor="@color/Grey_900"/>
 
     </RelativeLayout>
+
 </RelativeLayout>

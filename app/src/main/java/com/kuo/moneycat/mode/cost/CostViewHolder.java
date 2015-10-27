@@ -15,14 +15,14 @@ import com.kuo.moneycat.R;
  */
 public class CostViewHolder extends RecyclerView.ViewHolder {
 
-    public ImageButton iconImage;
+    public ImageView iconImage;
     public TextView titleText, costText;
     public RelativeLayout infoLayout;
 
     public CostViewHolder(View itemView) {
         super(itemView);
 
-        iconImage = (ImageButton) itemView.findViewById(R.id.iconImage);
+        iconImage = (ImageView) itemView.findViewById(R.id.iconImage);
         titleText = (TextView) itemView.findViewById(R.id.titleText);
         costText = (TextView) itemView.findViewById(R.id.costText);
         infoLayout = (RelativeLayout) itemView.findViewById(R.id.infoLayout);

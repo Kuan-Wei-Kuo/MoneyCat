@@ -84,7 +84,7 @@ public class FragmentMain extends Fragment {
             }
         }
 
-        mainPagerAdapter = new MainPagerAdapter(getFragmentManager(), fragments, titles);
+        mainPagerAdapter = new MainPagerAdapter(getChildFragmentManager(), fragments, titles);
         viewPager.setAdapter(mainPagerAdapter);
         viewPager.setVerticalScrollbarPosition(focusCount);
 

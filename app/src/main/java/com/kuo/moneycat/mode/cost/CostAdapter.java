@@ -2,7 +2,6 @@ package com.kuo.moneycat.mode.cost;
 
 import android.os.Build;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,10 +42,11 @@ public class CostAdapter extends RecyclerView.Adapter<CostViewHolder> {
         holder.costText.setText("$ " + costItems.get(position).getCost());
         //holder.infoLayout.setOnClickListener(onClickListener);
 
-        holder.itemView.setOnClickListener(onClickListener);
+        holder.infoLayout.setOnClickListener(onClickListener);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            holder.iconImage.setTransitionName("iconImage" + position);
+            holder.iconImage.setTransitionName("iconImage" + costItems.get(position).getYear()
+                    + costItems.get(position).getMonth() + costItems.get(position).getDay() + position);
         }
     }
 
