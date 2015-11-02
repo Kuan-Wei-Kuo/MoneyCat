@@ -15,6 +15,11 @@ import java.util.ArrayList;
 public class DrawerAdapter extends RecyclerView.Adapter<DrawerViewHolder> {
 
     private ArrayList<DrawerItem> drawerItems = new ArrayList<>();
+    private OnItemClickListener onItemClickListener;
+
+    public interface OnItemClickListener {
+        void onClick(View view, int position);
+    }
 
     public DrawerAdapter(ArrayList<DrawerItem> drawerItems) {
         this.drawerItems = drawerItems;
@@ -29,16 +34,29 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(DrawerViewHolder holder, int position) {
+    public void onBindViewHolder(DrawerViewHolder holder, final int position) {
 
         holder.icon.setBackgroundResource(drawerItems.get(position).getIconResId());
         holder.title.setText(drawerItems.get(position).getTitleText());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(onItemClickListener != null) {
+                    onItemClickListener.onClick(view, position);
+                }
+            }
+        });
 
     }
 
     @Override
     public int getItemCount() {
         return drawerItems.size();
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 
 }

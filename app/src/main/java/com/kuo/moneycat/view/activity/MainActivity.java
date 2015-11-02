@@ -12,11 +12,13 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.kuo.moneycat.R;
 import com.kuo.moneycat.mode.drawer.DrawerAdapter;
 import com.kuo.moneycat.mode.drawer.DrawerItem;
 import com.kuo.moneycat.mode.sqlite.SQLiteManager;
+import com.kuo.moneycat.view.fragment.FragmentAccount;
 import com.kuo.moneycat.view.fragment.FragmentMain;
 
 import java.util.ArrayList;
@@ -38,8 +40,6 @@ public class MainActivity extends AppCompatActivity {
         FragmentMain fragmentMain = new FragmentMain();
         fragmentTransaction.replace(R.id.frameLayout, fragmentMain, "fragmentMain");
         fragmentTransaction.commit();
-
-        testSQLiteManager();
     }
 
 
@@ -84,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
         drawerAdapter = new DrawerAdapter(drawerItems);
         linearLayoutManager = new LinearLayoutManager(this);
 
+        drawerAdapter.setOnItemClickListener(onItemOnClickListener);
         drawerRecyclerView.setHasFixedSize(true);
         drawerRecyclerView.setLayoutManager(linearLayoutManager);
         drawerRecyclerView.setAdapter(drawerAdapter);
@@ -107,24 +108,26 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
     }
 
-    private void testSQLiteManager() {
+    private DrawerAdapter.OnItemClickListener onItemOnClickListener = new DrawerAdapter.OnItemClickListener() {
+        @Override
+        public void onClick(View view, int position) {
 
-        SQLiteManager sqLiteManager = new SQLiteManager(this);
-        sqLiteManager.onOpen(sqLiteManager.getWritableDatabase());
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
-        sqLiteManager.insertAccountData("test", "defaultCostTable", "defaultIncomeTable", "2015-11-1");
-
-        Cursor cursor = sqLiteManager.getAccountData();
-
-        if(cursor.getCount() != 0){
-            cursor.moveToFirst();
-            for(int i = 0 ; i < cursor.getCount() ; i++){
-                Log.d("SQLiteManager", "Account:" + cursor.getString(0) + ", " + "CostTable:" + cursor.getString(1) + ", " + "IncomeTable:" + cursor.getString(2));
-                cursor.moveToNext();
+            switch (position) {
+                case 0:
+                    FragmentAccount fragmentAccount = new FragmentAccount();
+                    fragmentTransaction.replace(R.id.frameLayout, fragmentAccount, "fragmentAccount");
+                    fragmentTransaction.addToBackStack("fragmentTransaction");
+                    fragmentTransaction.commit();
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    break;
             }
+
         }
-
-
-    }
+    };
 
 }
