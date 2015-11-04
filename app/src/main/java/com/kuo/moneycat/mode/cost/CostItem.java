@@ -1,12 +1,20 @@
 package com.kuo.moneycat.mode.cost;
 
+import java.io.Serializable;
+
 /**
  * Created by Kuo on 2015/10/23.
  */
-public class CostItem {
+public class CostItem implements Serializable {
 
-    private int iconImage, cost, year, month, day;
+    private static final long serialVersionUID = 1L;
+
+    private int rowId, iconImage, cost, year, month, day;
     private String titleText;
+
+    public void setRowId(int rowId) {
+        this.rowId = rowId;
+    }
 
     public void setTitleText(String titleText) {
         this.titleText = titleText;
@@ -54,5 +62,9 @@ public class CostItem {
 
     public int getYear() {
         return year;
+    }
+
+    public int getRowId() {
+        return rowId;
     }
 }

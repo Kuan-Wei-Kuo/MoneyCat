@@ -22,8 +22,8 @@
         android:textColor="@color/Grey_900"
         android:textSize="50dp"/>
 
-    <GridView
-        android:id="@+id/gridView"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_below="@+id/moneyText"/>
@@ -31,7 +31,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/gridView"
+        android:layout_below="@+id/viewPager"
         android:orientation="vertical">
 
         <LinearLayout

@@ -97,11 +97,11 @@ public class FragmentCost extends Fragment {
 
     private CostAdapter.OnClickListener onClickListenerAdapter = new CostAdapter.OnClickListener() {
         @Override
-        public void onClick(View view) {
+        public void onClick(View view, CostItem costItem) {
 
             FragmentMain fragmentMain = (FragmentMain) getActivity().getSupportFragmentManager().findFragmentByTag("fragmentMain");
             FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-            FragmentDetail fragmentDetail = new FragmentDetail();
+            FragmentDetail fragmentDetail = FragmentDetail.newIntance(costItem);
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 

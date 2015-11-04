@@ -19,7 +19,7 @@ public class CostAdapter extends RecyclerView.Adapter<CostViewHolder> {
     private OnClickListener onClickListenerAdapter;
 
     public interface OnClickListener {
-        void onClick(View view);
+        void onClick(View view, CostItem costItem);
     }
 
     public CostAdapter(ArrayList<CostItem> costItems) {
@@ -35,14 +35,21 @@ public class CostAdapter extends RecyclerView.Adapter<CostViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(CostViewHolder holder, int position) {
+    public void onBindViewHolder(CostViewHolder holder, final int position) {
 
         holder.iconImage.setBackgroundResource(costItems.get(position).getIconImage());
         holder.titleText.setText(costItems.get(position).getTitleText());
         holder.costText.setText("$ " + costItems.get(position).getCost());
         //holder.infoLayout.setOnClickListener(onClickListener);
 
-        holder.infoLayout.setOnClickListener(onClickListener);
+        holder.infoLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(onClickListenerAdapter != null) {
+                    onClickListenerAdapter.onClick(view, costItems.get(position));
+                }
+            }
+        });
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             holder.iconImage.setTransitionName("iconImage" + costItems.get(position).getYear()
@@ -54,17 +61,6 @@ public class CostAdapter extends RecyclerView.Adapter<CostViewHolder> {
     public int getItemCount() {
         return costItems.size();
     }
-
-    private View.OnClickListener onClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-
-            if(onClickListenerAdapter != null) {
-                onClickListenerAdapter.onClick(view);
-            }
-
-        }
-    };
 
     public void setOnClickListener(OnClickListener onClickListenerAdapter) {
         this.onClickListenerAdapter = onClickListenerAdapter;
