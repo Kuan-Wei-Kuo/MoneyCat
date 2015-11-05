@@ -22,10 +22,18 @@
         android:textColor="@color/Grey_900"
         android:textSize="50dp"/>
 
-    <android.support.v4.view.ViewPager
+    <com.kuo.samplecalculator.CalculatorView
+        android:id="@+id/calculatorView"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        android:background="@color/Grey_50"
+        android:orientation="vertical"
+        android:layout_below="@+id/moneyText"></com.kuo.samplecalculator.CalculatorView>
+
+    <com.kuo.moneycat.view.common.WrapContentHeightViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/moneyText"/>
 
     <LinearLayout
@@ -61,6 +69,7 @@
                     android:textSize="20dp"/>
 
                 <TextView
+                    android:id="@+id/accountText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/toolbar"
@@ -102,6 +111,7 @@
                     android:textSize="20dp"/>
 
                 <TextView
+                    android:id="@+id/contentText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/toolbar"

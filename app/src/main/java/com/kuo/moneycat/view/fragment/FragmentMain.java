@@ -1,5 +1,6 @@
 package com.kuo.moneycat.view.fragment;
 
+import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -56,6 +57,7 @@ public class FragmentMain extends Fragment {
         initAdapter();
 
         floatButton = (ImageButton) view.findViewById(R.id.floatButton);
+        floatButton.setOnClickListener(floatButtonClickListener);
 
     }
 
@@ -99,4 +101,18 @@ public class FragmentMain extends Fragment {
 
         return calendar.get(Calendar.DAY_OF_MONTH);
     }
+
+    private ImageButton.OnClickListener floatButtonClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+
+            FragmentInster fragmentInster = new FragmentInster();
+
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.frameLayout, fragmentInster, "fragmentInster");
+            fragmentTransaction.addToBackStack("fragmentTransaction");
+            fragmentTransaction.commit();
+
+        }
+    };
 }
