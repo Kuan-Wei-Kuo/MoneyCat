@@ -3,6 +3,7 @@ package com.kuo.samplecalculator;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,6 +57,8 @@ public class CalculatorView extends LinearLayout {
         super.onSizeChanged(w, h, oldw, oldh);
 
         if(!isCreated) {
+            Log.d("onSizeChanged", "onSizeChanged");
+            Log.d("width", "" + w);
             onCreateView(w, h);
             isCreated = true;
         }
@@ -65,10 +68,11 @@ public class CalculatorView extends LinearLayout {
 
     private void onCreateView(int width, int height) {
 
-        textViews.clear();
+        Log.d("CalculatorView", "Create View");
         textViewCount = 0;
-
         autoTextViewWidth = width / 4;
+
+        setBackgroundColor(getResources().getColor(android.R.color.holo_blue_light));
 
         LinearLayout.LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         LinearLayout linearLayout = new LinearLayout(getContext());
@@ -76,11 +80,11 @@ public class CalculatorView extends LinearLayout {
         linearLayout.setOrientation(HORIZONTAL);
 
         onCreateTextViews();
-        addView(addOperatorTextView());
+        this.addView(addOperatorTextView());
 
         linearLayout.addView(addNumberTextView());
         linearLayout.addView(addContorlTextView());
-        addView(linearLayout);
+        this.addView(linearLayout);
 
     }
 

@@ -22,13 +22,6 @@
         android:textColor="@color/Grey_900"
         android:textSize="50dp"/>
 
-    <com.kuo.samplecalculator.CalculatorView
-        android:id="@+id/calculatorView"
-        android:layout_width="350dp"
-        android:layout_height="350dp"
-        android:background="@color/Grey_50"
-        android:orientation="vertical"
-        android:layout_below="@+id/moneyText"></com.kuo.samplecalculator.CalculatorView>
 
     <com.kuo.moneycat.view.common.WrapContentHeightViewPager
         android:id="@+id/viewPager"
@@ -55,6 +48,7 @@
                 android:background="@mipmap/ic_launcher" />
 
             <LinearLayout
+                android:id="@+id/accountLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
@@ -134,4 +128,12 @@
         android:background="@drawable/circle_button_add"
         android:elevation="5dp"/>
 
+    <com.kuo.samplecalculator.TestCustom
+        android:id="@+id/testCustom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/moneyText"
+        android:layout_toLeftOf="@+id/moneyText"
+        android:alpha="0">
+    </com.kuo.samplecalculator.TestCustom>
 </RelativeLayout>

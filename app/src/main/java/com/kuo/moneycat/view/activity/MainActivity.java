@@ -1,6 +1,5 @@
 package com.kuo.moneycat.view.activity;
 
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -9,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,7 +15,6 @@ import android.view.View;
 import com.kuo.moneycat.R;
 import com.kuo.moneycat.mode.drawer.DrawerAdapter;
 import com.kuo.moneycat.mode.drawer.DrawerItem;
-import com.kuo.moneycat.mode.sqlite.SQLiteManager;
 import com.kuo.moneycat.view.fragment.FragmentAccount;
 import com.kuo.moneycat.view.fragment.FragmentMain;
 
@@ -41,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.frameLayout, fragmentMain, "fragmentMain");
         fragmentTransaction.commit();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
