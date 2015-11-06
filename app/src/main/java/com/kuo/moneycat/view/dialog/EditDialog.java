@@ -35,7 +35,7 @@ public class EditDialog extends DialogFragment {
         View view = inflater.inflate(R.layout.dialog_edit, container, false);
         findView(view);
         initView();
-        
+
         return view;
     }
 
