@@ -1,5 +1,6 @@
 package com.kuo.moneycat.view.activity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -15,10 +16,12 @@ import android.view.View;
 import com.kuo.moneycat.R;
 import com.kuo.moneycat.mode.drawer.DrawerAdapter;
 import com.kuo.moneycat.mode.drawer.DrawerItem;
+import com.kuo.moneycat.mode.sqlite.SQLiteManager;
 import com.kuo.moneycat.view.fragment.FragmentAccount;
 import com.kuo.moneycat.view.fragment.FragmentMain;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        isFirstRun();
 
         initView();
 
@@ -125,5 +130,35 @@ public class MainActivity extends AppCompatActivity {
 
         }
     };
+
+    private static final String DATA = "data";
+    private static final String IS_FIRST = "isFirst";
+
+
+    private void isFirstRun() {
+
+        Calendar calendar = Calendar.getInstance();
+
+        String DEFAULT_COST_TABLE = "defaultCostTable";
+        String DEFAULT_INCOME_TABLE = "defaultIncomeTable";
+        String DEFAULT_ACCOUNT = "defaultAccount";
+        String DEFAULT_DATE = calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH);
+
+        SharedPreferences sharedPreferences = getSharedPreferences(DATA, 0);
+
+        if(sharedPreferences.getBoolean(IS_FIRST, true)) {
+
+            SQLiteManager sqLiteManager = new SQLiteManager(this);
+            sqLiteManager.onOpen(sqLiteManager.getWritableDatabase());
+
+            sqLiteManager.insertAccountData(DEFAULT_ACCOUNT, DEFAULT_COST_TABLE, DEFAULT_INCOME_TABLE, DEFAULT_DATE);
+            sqLiteManager.onCreateMoneyTable(DEFAULT_COST_TABLE);
+            sqLiteManager.onCreateMoneyTable(DEFAULT_INCOME_TABLE);
+            sqLiteManager.close();
+
+            sharedPreferences.edit().putBoolean(IS_FIRST, false).commit();
+        }
+
+    }
 
 }

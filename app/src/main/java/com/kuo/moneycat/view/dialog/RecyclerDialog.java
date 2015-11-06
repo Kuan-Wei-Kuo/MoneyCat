@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.TextView;
 
 import com.kuo.moneycat.R;
 import com.kuo.moneycat.mode.drawer.DrawerAdapter;
@@ -28,32 +29,53 @@ public class RecyclerDialog extends DialogFragment {
     private LinearLayoutManager linearLayoutManager;
     private ArrayList<DrawerItem> drawerItems = new ArrayList<>();
 
+    private OnEnterClickListener onEnterClickListener;
+
+    private TextView cancelText, enterText;
+
+    private String focusAccount = "";
+
+    public interface OnEnterClickListener {
+        void onClick(String text);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        View view = inflater.inflate(R.layout.fragment_recycler_view, container, false);
+        View view = inflater.inflate(R.layout.dialog_recycler, container, false);
 
+        initDrawerItems();
         findView(view);
+        initView();
 
         return view;
     }
 
     private void findView(View view) {
 
-        initDrawerItems();
+        cancelText = (TextView) view.findViewById(R.id.cancelText);
+        enterText = (TextView) view.findViewById(R.id.enterText);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         drawerAdapter = new DrawerAdapter(drawerItems);
         linearLayoutManager = new LinearLayoutManager(getActivity());
 
+    }
+
+    private void initView() {
+
+        cancelText.setOnClickListener(onTextViewClickListener);
+        enterText.setOnClickListener(onTextViewClickListener);
+
+        drawerAdapter.setOnItemClickListener(onItemClickListener);
+
         recyclerView.setBackgroundColor(getResources().getColor(R.color.Grey_50));
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(drawerAdapter);
-
     }
 
     private void initDrawerItems() {
@@ -75,4 +97,37 @@ public class RecyclerDialog extends DialogFragment {
         }
 
     }
+
+    private DrawerAdapter.OnItemClickListener onItemClickListener = new DrawerAdapter.OnItemClickListener() {
+        @Override
+        public void onClick(View view, int position) {
+
+            focusAccount = drawerItems.get(position).getTitleText();
+
+        }
+    };
+
+    private TextView.OnClickListener onTextViewClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+
+            switch (view.getId()) {
+                case R.id.cancelText:
+                    getDialog().dismiss();
+                    break;
+                case R.id.enterText:
+                    if(onEnterClickListener != null){
+                        onEnterClickListener.onClick(focusAccount);
+                    }
+                    getDialog().dismiss();
+                    break;
+            }
+
+        }
+    };
+
+    public void setOnEnterClickListener(OnEnterClickListener onEnterClickListener) {
+        this.onEnterClickListener = onEnterClickListener;
+    }
+
 }

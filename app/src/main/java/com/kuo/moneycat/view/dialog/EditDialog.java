@@ -30,9 +30,9 @@ public class EditDialog extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+        View view = inflater.inflate(R.layout.dialog_edit, container, false);
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        View view = inflater.inflate(R.layout.dialog_edit, container, false);
         findView(view);
         initView();
 

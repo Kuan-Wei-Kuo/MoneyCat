@@ -14,6 +14,8 @@ import java.util.ArrayList;
  */
 public class DrawerAdapter extends RecyclerView.Adapter<DrawerViewHolder> {
 
+    private int flagFocus = 0;
+
     private ArrayList<DrawerItem> drawerItems = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
 
@@ -39,14 +41,23 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerViewHolder> {
         holder.icon.setBackgroundResource(drawerItems.get(position).getIconResId());
         holder.title.setText(drawerItems.get(position).getTitleText());
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.drawerItemLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(onItemClickListener != null) {
+                    flagFocus = position;
                     onItemClickListener.onClick(view, position);
+                    notifyItemChanged(flagFocus);
+                    notifyItemChanged(position);
                 }
             }
         });
+
+        if(position == flagFocus) {
+            holder.drawerItemLayout.setBackgroundColor(holder.drawerItemLayout.getResources().getColor(R.color.Grey_400));
+        } else {
+            holder.drawerItemLayout.setBackgroundColor(holder.drawerItemLayout.getResources().getColor(R.color.Grey_50));
+        }
 
     }
 
@@ -59,4 +70,7 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerViewHolder> {
         this.onItemClickListener = onItemClickListener;
     }
 
+    public void setFlagFocus(int flagFocus) {
+        this.flagFocus = flagFocus;
+    }
 }

@@ -45,7 +45,7 @@
             <ImageView
                 android:layout_width="45dp"
                 android:layout_height="45dp"
-                android:background="@mipmap/ic_launcher" />
+                android:background="@mipmap/account_icon" />
 
             <LinearLayout
                 android:id="@+id/accountLayout"
@@ -79,6 +79,7 @@
             android:background="@color/Grey_900"/>
 
         <LinearLayout
+            android:id="@+id/contentLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -88,7 +89,7 @@
             <ImageView
                 android:layout_width="45dp"
                 android:layout_height="45dp"
-                android:background="@mipmap/ic_launcher"/>
+                android:background="@mipmap/paint_black_icon"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -125,7 +126,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="30dp"
-        android:background="@drawable/circle_button_add"
+        android:background="@drawable/circle_button_enter"
         android:elevation="5dp"/>
 
     <com.kuo.samplecalculator.TestCustom
